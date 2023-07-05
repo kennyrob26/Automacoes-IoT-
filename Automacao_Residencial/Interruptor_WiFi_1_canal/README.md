@@ -7,4 +7,17 @@ lâmpada do ambiente e até então estou contente com o resultado alcançado.
 
 
 ## Ferramentas utilizadas no projeto
-Pensando em automações futuras optei em utilizar a plataforma node-Red
+Pensando em automações futuras, optei em utilizar a plataforma node-Red para a centralização de futuros sensores e atuadores. Sendo assim, o node-Red fica responsável por gerar uma pequena página Web utilizando os nós de dashboards, na página existe um switch que muda de estado quando a lampada tem seu estado alterado, e se alterarmos o estado do switch a lampada também mudará de estado.  
+Para a programação no ESP01 preferi utilizar o arduino IDE, por conta da quantidade imensa de bibliotecas disponíveis. O controle da lâmpada e monitoramento do interruptor é feito pelo próprio microcontrolador, o principal motivo para isso é que se toda a parte de controle fosse jogada para o node-Red em uma eventual falha no mesmo (queda da conexão ou algo do tipo) a lâmpada deixaria de funcionar.  
+O código presente no ESP também é independente da conexão MQTT, mas infelizmente quando ele não consegue se conectar ao servidor existe um pequeno delay de 3 a 4 segundo para o acionamento da Lâmpada, ao contrário de quando existe a conexão, onde neste cenário a lampada acende instantâneamente ao mudar o estado do botão.  
+
+## O Hardware do Projeto
+Um dos maiores desafios do projeto foi conseguir chegar em uma PCI (placa de circuito impresso) que atenderia os requisitos, e também pequena o suficiente para servir em uma caixa de luz 4x2. Então a versão atual do projeto se baseia no esquema elétrico a baixo:
+
+### COLOCAR IMAGEM DO ESQUEMA ELÉTRICO
+
+1. Basicamente nós temos uma **fonte Hi-link de 3.3V** que é mais do que o suficiente para a alimentação do projeto.
+2. Como já dito anteriormente o **ESP01** foi o microcontrolador escolhido e ele é quem monitora e controla tudo na placa. 
+3. O **BC558** é um transistor PNP, e este é um ponto muito importante, as **GPIOs 0 e 2 sempre devem iniciar com um nivel lógico alto**, e por isso você sempre deve **utilizar transistores PNP**. Sua função é basicamente excitar o FotoTriac.
+4. O **Foto-Triac MOC3052** é o responsável por acionar a lâmpada, ele trabalha com uma **corrente máxima de 1A**, então é sempre importante estar atento ao tipo de carga, a depender será necessário o uso de TRIACs ou até mesmo um Relé.  
+
