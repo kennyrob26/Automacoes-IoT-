@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../testeOTA"
+		},
+		{
+			"name": "sensor_umidade_solo",
+			"path": ".."
+		},
+		{
+			"name": "Wifi_Manager",
+			"path": "../../Wifi_Manager"
+		}
+	],
+	"settings": {}
+}

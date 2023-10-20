@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style2.css">
+    <title>Sensor de Irrigação</title>
+</head>
+<body>
+    <header>
+        <h1>&#x1F4A7 Sensor de Irrigação</h1>
+    </header>
+    <main>
+
+        <h2>Configurar Wi-Fi</h2>
+        <hr>
+
+        <form action="/" method="POST">
+
+        <h3>Configurações Wi-Fi</h3>
+
+        <section>
+            <p>
+                <label for="ssid">SSID</label>
+                <input type="text" name="ssid" id="ssid" placeholder="Nome da rede WiFi">
+            </p>
+            <p>
+                <label for="senha">Senha</label>
+                <input type="password" name="senha" id="senha" placeholder="Senha do Wifi">
+            </p>
+        </section>
+
+        <h3>Configurações MQTT</h3>
+
+        <section>
+                <p>
+                    <label for="brokerMQTT">Broker MQTT</label>
+                    <input type="text" name="brokerMQTT" id="brokerMQTT" placeholder="https://meuBrokerMqtt.com">
+                </p>
+                <p>
+                    <label for="portaMQTT">Porta MQTT</label>
+                    <input type="number" name="portaMQTT" id="portaMQTT" placeholder="1883">
+                </p>
+        </section>
+
+        <p><button type="button" id="abrir_opcoes_avancadas" onclick="clicou()">Opções Avançadas </button></p>
+
+
+        <div id="opcoes_avancadas">
+
+            <h2>Cadastrar Tópicos</h2>
+        <hr>
+
+            <h3>Sensores de Umidade Do Solo</h3>
+            <section>
+                <p>
+                    <label for="sensor_umidade_1">Sensor 1</label>
+                    <input type="text" name="sensor_umidade_1" id="sensor_umidade_1" placeholder="sensor_umidade/sensor1">
+                </p>
+                <p>
+                    <label for="sensor_umidade_2">Sensor 2</label>
+                    <input type="text" name="sensor_umidade_1" id="sensor_umidade_2" placeholder="sensor_umidade/sensor2">
+                </p>
+                <p>
+                    <label for="sensor_umidade_3">Sensor 3</label>
+                    <input type="text" name="sensor_umidade_3" id="sensor_umidade_3" placeholder="sensor_umidade/sensor3">
+                </p>
+                <p>
+                    <label for="sensor_umidade_4">Sensor 4</label>
+                    <input type="text" name="sensor_umidade_4" id="sensor_umidade_4" placeholder="sensor_umidade/sensor4">
+                </p>
+            </section>
+            <hr>
+            <h3>Sensor DHT11</h3>
+
+            <section>
+                
+                <p>
+                    <label for="dht11_umidade">Umidade</label>
+                    <input type="text" name="dht11_umidade" id="dht11_umidade" placeholder="sensor_umidade/dht11_umidade">
+                </p>
+                <p>
+                    <label for="dht11_temperatura">Temperatura</label>
+                    <input type="text" name="dht11_temperatura" id="dht11_temperatura" placeholder="sensor_umidade/dht11_temperatura">
+                </p>
+                
+            </section>
+
+            <h3>Placa solar e Bateria</h3>
+
+            <section>
+                <p>
+                    <label for="tensao_bateria">Bateria (V)</label>
+                    <input type="text" name="tensao_bateria" id="tensao_bateria" placeholder="sensor_umidade/tensao_bateria">
+                </p>
+                <p>
+                    <label for="porcentagem_bateria">Bateria (%)</label>
+                    <input type="text" name="porcentagem_bateria" id="porcentagem_bateria" placeholder="sensor_umidade/porcentagem_bateria">
+                </p>
+                <p>
+                    <label for="tensao_placa">P. Solar (V)</label>
+                    <input type="text" name="tensao_placa" id="tensao_placa" placeholder="sensor_umidade/tensao_placa">
+                </p>
+        </div>
+
+        <hr>
+
+        <p>
+            <input type="submit" id="submit" value="Enviar">
+        </p>
+       
+        </form>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
