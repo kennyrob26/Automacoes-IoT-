@@ -12,6 +12,7 @@
 
     void conectWifi();
     void resetarWifi();
+    bool isModoAP();
 
 
 #endif

@@ -24,28 +24,32 @@ void conectWifi(char* ssid, char* senha)
 //caso não tenha, inicia um servidor assincrono para que o usuário as insira
 
 
-    AsyncWebServer server(80);
+AsyncWebServer server(80);
 
-    const char* SSID       = "ssid";
-    const char* SENHA      = "senha";
-    const char* MQTT       = "brokerMQTT";
-    const char* PORTA_MQTT = "portaMQTT";
+const char* SSID       = "ssid";
+const char* SENHA      = "senha";
+const char* MQTT       = "brokerMQTT";
+const char* PORTA_MQTT = "portaMQTT";
 
-    //variáveis que vão receber o conteúdo do formulário HTML
-    String ssid       = "";
-    String senha      = "";
-    String brokerMQTT = "";
-    String portaMQTT  = "";
+//variáveis que vão receber o conteúdo do formulário HTML
+String ssid       = "";
+String senha      = "";
+String brokerMQTT = "";
+String portaMQTT  = "";
 
-    //Arquivo onde serão armazenado as configurações
-    const char* arquivoSSID      = "/ssid.txt";
-    const char* arquivoSENHA     = "/senha.txt";
-    const char* arquivoMQTT      = "/brokerMQTT.txt";
-    const char* arquivoPortaMQTT = "/portaMQTT.txt";
+//Arquivo onde serão armazenado as configurações
+const char* arquivoSSID      = "/ssid.txt";
+const char* arquivoSENHA     = "/senha.txt";
+const char* arquivoMQTT      = "/brokerMQTT.txt";
+const char* arquivoPortaMQTT = "/portaMQTT.txt";
 
-    //Variáveis de tempo
-    unsigned long tempoAnterior = 0,
-                  tempoMaximo   = 10000;  //Tempo limite para tentar conectar ao WiFi
+//Verifica se o Wi-Fi do ESP está como AP
+//É importante pois o ESP não pode dormir quando estiver em modo AP
+bool modoAP = false; 
+
+//Variáveis de tempo
+unsigned long tempoAnterior = 0,
+              tempoMaximo   = 10000;  //Tempo limite para tentar conectar ao WiFi
 
 void conectWifi()
 {
@@ -69,6 +73,8 @@ void conectWifi()
         WiFi.softAP("ESP_CONFIGURAR_WIFI", NULL);
 
         IPAddress IP = WiFi.softAPIP();
+        //Modo AP foi ativado
+        modoAP = true;
         Serial.print("IP do ponto de acesso: ");
         Serial.println(IP);
 
@@ -172,6 +178,7 @@ bool iniciarWiFi()
         return false;
         }
     }
+    modoAP = false;
     Serial.println("Conectado a rede:" + ssid);
     return true;
 }
@@ -180,4 +187,9 @@ void resetarWifi()
 {
     escreverArquivo(SPIFFS, arquivoSSID, "");
     escreverArquivo(SPIFFS, arquivoSENHA, "");
+}
+
+bool isModoAP()
+{
+    return modoAP;
 }

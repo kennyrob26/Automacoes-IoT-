@@ -3,9 +3,14 @@
 #include <Arduino.h>
 #include "main.h"
 
+
 /*=============--- VARIAVEIS ---===================*/
 
-//Lembre-se de definir qual o DHT utilizado DHT11, DHT12..
+//pinos utilizados
+#define pino_BOTAO_2       4
+#define pino_SENSOR_1     35
+#define pino_BATERIA      32
+#define pino_PLACA_SOLAR  33
 
 
 unsigned long tempoAnt      =    0;
@@ -13,8 +18,8 @@ unsigned long tempoDesejado = 5000;
 unsigned long tempoAtual    =    0;
 
 //Variáveis que serão modificadas durante a interrupção
-volatile unsigned long tempoInicialBotao  = 0,        //É o momento em que o botão foi pressionado
-                       tempoPressionado   = 0;        // quanto tempo o botão ficou pressionado
+volatile unsigned long tempoInicialBotao  = 0,   //É o momento em que o botão foi pressionado
+                       tempoPressionado   = 0;   // quanto tempo o botão ficou pressionado
 
 volatile bool estadoBotao   = true;
 
@@ -22,16 +27,17 @@ volatile bool estadoBotao   = true;
 
 void IRAM_ATTR mudaStatusBotao()
 {
-  tempoAtual = xTaskGetTickCount(); //Substitui o millis()
-  //Para evitar acionamento acidental
+  tempoAtual = xTaskGetTickCount();     //Substitui o millis()
+
+  //Para evitar acionamento acidental 
   if((tempoAtual - tempoInicialBotao) > 1000)
   {
-    //Quando o botão for de HIGH para LOW 
-    //Será armazenado em tempoPressionado quanto tempo o botão ficou pressionado.
-    if(!estadoBotao)
+    //Quando o botão for de HIGH para LOW (o usuário parar de pressionar)
+    //Será armazenado em "tempoPressionado" quanto tempo o botão ficou pressionado.
+    if(estadoBotao)
       tempoPressionado = tempoAtual - tempoInicialBotao;
     
-    //Nunca esquercer de resetar o tempo anterior
+    //Nunca esquercer de resetar o tempo inicial
     tempoInicialBotao = tempoAtual;
     //Inverte o valor de estado do botão
     estadoBotao = !estadoBotao;
@@ -40,7 +46,8 @@ void IRAM_ATTR mudaStatusBotao()
   } 
 }
 
-//Instânciando os objetos
+
+/*===========--- Instanciando Objetos ---=========*/
 
 SensorUmidade sensor1(35);
 
@@ -49,20 +56,27 @@ SensorUmidade sensor1(35);
 void setup() {
   Serial.begin(115200);
 
-  pinMode(5, INPUT);
+  //Define os pinos utilizados
+  pinoBateria(pino_BATERIA);
+  pinoPlacaSolar(pino_PLACA_SOLAR);
+  pinMode(pino_BOTAO_2, INPUT);
 
+  //Monitora a borda de subida e descida
+  attachInterrupt(digitalPinToInterrupt(pino_BOTAO_2), mudaStatusBotao, CHANGE);       
 
-  attachInterrupt(digitalPinToInterrupt(5), mudaStatusBotao, CHANGE);       //Na bordade de subida e descida
+  //Imprime no monitor serial o que despertou o ESP
+  imprirMotivoDespertou();
 
+  //Define por quanto tempo o esp dormirá em segundos
+  defineTempoSono(5);
+
+  //Faz toda a configuração de WiFi e MQTT
   conectWifi();
-  //defineServerMqtt("10.0.0.114", 1883);
 
   //Função que inicia o Arduino OTA
   configArduinoOTA();
 
-  //Define os pinos utilizados
-  pinoBateria(32);
-  pinoPlacaSolar(33);
+
   
 }//end setup
 
@@ -75,7 +89,7 @@ void loop() {
   //Conecta ao nosso server MQTT
   conectServerMqtt();
 
-  //Verifica se o usuário pressionou o botão 1 por mais de 4 segundos
+  //Verifica se o usuário pressionou o botão 2 por mais de 4 segundos
   //Em caso afirmativo redefine O SSID e SENHA WiFi
   if(tempoPressionado > 4000)
   {
@@ -89,7 +103,32 @@ void loop() {
     ESP.restart();
   }
 
+  //Verifica se o ESP está conectado a uma rede ou em modo AP
+  if(!isModoAP() && digitalRead(pino_BOTAO_2))
+  {
+    Serial.println("===== ---Sensores--- ======\n");
+
+    publicaUmidadeAtual(sensor1);
+
+    leituraPinoBateria();
+
+    publicaTensaoBat();
+    
+    publicaPorcentBat();
+
+    publicaTensaoPlaca();
+
+    publicaTemperaturaAmbiente();
+
+    publicaUmidadeAmbiente();
+
+    Serial.println(estadoBotao);
+
+    espDormir();
+  }
   
+
+  /*
   unsigned long tempo = millis();
   if(tempo - tempoAnt > tempoDesejado)
   {
@@ -112,13 +151,7 @@ void loop() {
 
     publicaUmidadeAmbiente();
 
-  /*
-    Serial.printf ("Temperatura Ambiente: %.2f \n", temperaturaAmbiente());
-    Serial.printf("Umidade Ambiente: %.2f \n", umidadeAmbiente());
-
-    Serial.println("==========================\n");
-  */
-  }
+  }*/
   
 
 }//end loop
