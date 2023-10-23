@@ -1,3 +1,13 @@
+/*
+
+    NÃO ESTÁ SENDO UTILIZADA, FOI SUBSTITUIDA PELA BIBLIOTECA SENSOR UMIDADE SOLO
+        PRESENTE EM lib
+
+        *Basicamente é onde encontramos a função que define
+            pino que o sensor higrômetro está utilizando
+        *E a função que retorna qual a umidade
+*/
+
 #include "statusSensorUmidade.h"
 
 unsigned short int umidade    = 0,
@@ -27,6 +37,7 @@ unsigned short int umidadeAtual()
 
     int valorMin = 1000,
         valorMax = 2600;
+
     //Converte para porcentagem
     if(leituraPino > valorMax)
     {

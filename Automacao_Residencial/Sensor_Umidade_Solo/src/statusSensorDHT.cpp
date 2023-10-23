@@ -1,9 +1,24 @@
+/*=====================================================
+
+        *Contém 2 funções muito simples
+        *uma das funções retorna a umidade 
+            e a outra a temperatura do ambuiente
+
+======================================================*/
+
 #include "statusSensorDHT.h"
 
-float temperatura = 0.0;
-float umidadeAmb = 0.0;
+/*=======================--- Variáveis ---=====================*/
+
+//São salvos na memória RTC pois é necessário utilizar após o ESP acordar
+RTC_DATA_ATTR float temperatura = 0.0;
+RTC_DATA_ATTR float umidadeAmb = 0.0;
+
+/*=================--- Instanciando Objeto ---=================*/
 
 DHT dht(DHTPino, DHTTYPE);
+
+/*=======================--- Funções ---=====================*/
 
 float temperaturaAmbiente()
 {   

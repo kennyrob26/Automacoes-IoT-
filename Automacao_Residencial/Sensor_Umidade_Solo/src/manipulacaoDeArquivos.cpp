@@ -1,3 +1,12 @@
+/*=====================================================
+
+    *Estão presente todas as funções para manipulação de arquivos
+    *Estas funções tem grande utilização na configuração do projeto
+    *Elas são muito utilizadas no arquivo configWifi.cpp
+
+======================================================*/
+
+
 #include "manipulacaoDeArquivos.h"
 
 void iniciairSPIFFS()

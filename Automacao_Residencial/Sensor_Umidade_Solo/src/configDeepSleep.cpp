@@ -1,3 +1,11 @@
+/*==============================================================
+
+        *Aqui estão presentes todas as configurações de sono profundo do es,
+    desde a informação do que despertou o ESP, até definição do tempo e a 
+    função que de fato coloca o esp para 'dormir'
+
+================================================================*/
+
 #include "Arduino.h"
 #include "configDeepSleep.h"
 

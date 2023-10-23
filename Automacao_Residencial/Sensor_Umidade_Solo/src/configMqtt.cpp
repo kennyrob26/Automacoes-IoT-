@@ -1,3 +1,10 @@
+/*=======================================================
+    Aqui estão todas as configurações MQTT
+    A funções de configurações podem ser encontradas aqui
+    E TODAS as FUNÇÕES de publicar MQTT
+==========================================================*/
+
+
 #include "configMqtt.h"
 
     WiFiClient espClient;
@@ -17,25 +24,15 @@ void defineServerMqtt(const char* ipServidorMqtt, int portaMqtt)
     client.setCallback(callback);
 
 }
+
 void conectServerMqtt()
 {   
-
     if(!client.connected())
     {
-        long tempo = millis();
-        if(tempo - ultimaReconexao > 5000)
-        {
-            ultimaReconexao = tempo;
-            if(reconectar())
-            {
-                ultimaReconexao = 0;
-            } //end if reconectar
-        }// end if tempo
-    }//end if externo
-    else
-    {
-        client.loop();
+        reconectar();
+ 
     }
+    client.loop();
     
 }
 void callback(char* topico, byte* mensagem, unsigned int tamanho)

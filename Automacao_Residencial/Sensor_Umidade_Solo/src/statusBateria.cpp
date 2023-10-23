@@ -17,20 +17,19 @@
 //tMinima é a tensão minima da bateria em   0% (no geral 2.7V ~ 3.0V)
 //tMaxima é a tensão maxima da bateria em 100% (no geral 3.8V ~ 4.2V)
 
-float  tMinima  = 3.0,    //0%   - 3.0V
-       tMaxima  = 4.2;    //100% - 4.20V
+/*=======================--- Variáveis ---=====================*/
 
+float  tMinima    = 3.0,                 //0%   - 3.0V
+       tMaxima    = 4.2,                 //100% - 4.20V
+       tensaoBat  = 0.0;                 //Armazena a tensão da bateria
 
-unsigned short int pinBat      = 0,      //Pino que faz a leitura da tensão da bateria
-                   //leituraPin  = 0,      //Buffer da leitura do pino. 
+unsigned short int pinBat      = 0,      //Pino que faz a leitura da tensão da bateria 
                    porcentBat  = 0;      //Armazena a porcentagem da bateria
 
-unsigned long int leituraPin   = 0;
+unsigned long int leituraPin   = 0;      //Vai armazenar a soma de 500 amostras
 
-float   tensaoBat   = 0.0;               //Armazena a tensão da bateria
 
-                        
-
+/*=======================--- Funções ---=====================*/
 
 void pinoBateria(int pinoBateria)
 {

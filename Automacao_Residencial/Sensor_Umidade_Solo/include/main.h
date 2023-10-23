@@ -10,6 +10,7 @@
     #include "configMqtt.h"
     #include "configArduinoOTA.h"
     #include "configDeepSleep.h"
+    #include "configBotao2.h"
 
     //Definindo cliente Wi-FI
     //WiFiClient espClient;

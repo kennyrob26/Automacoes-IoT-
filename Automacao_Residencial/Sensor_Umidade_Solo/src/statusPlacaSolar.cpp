@@ -1,8 +1,3 @@
-#include "statusPlacaSolar.h"
-
-float         tensaoPlaca = 0.0;
-unsigned int  pinoPlaca   = 0  ;
-
 /*No caso dos valores setados, a placa está ligada a um divisor de tensão, onde:
 
     [GND] ---- {R1 10K} -- [GPIO] ---- {R2 14.7K} ---- [VCC Placa solar]
@@ -16,12 +11,24 @@ unsigned int  pinoPlaca   = 0  ;
 
 */
 
+#include "statusPlacaSolar.h"
+
+/*=======================--- Variáveis ---=====================*/
+
+float         tensaoPlaca = 0.0;
+unsigned int  pinoPlaca   = 0  ;
+
+
+/*=======================--- Funções ---=====================*/
+
+//Define o pino utilizado
 void pinoPlacaSolar(int pinoPlacaSolar)
 {
     pinMode(pinoPlacaSolar, INPUT);
     pinoPlaca = pinoPlacaSolar;
 }
 
+//Retorna a tensão da placa solar
 float tensaoPlacaSolar()
 {
     //Vamos trabalhar com amostras 500 amostras por leitura, para garantir maior consistência dos dados

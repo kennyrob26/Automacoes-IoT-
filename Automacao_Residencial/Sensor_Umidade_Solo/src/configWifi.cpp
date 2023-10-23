@@ -1,24 +1,14 @@
+/*==================================================================
+    Todas as configurações WiFi podem ser encontradas aqui
+    Basicamente todas as funções que conectam, 
+        monitoram e genciam o Wi-Fi estão aqui
+    É aqui que estão as funçõs responsáveis por LER OS ARQUIVOS
+        e verificar se existem credenciais salvas
+    Quando os arquivos estão vazios inicia um servidor assincrono
+        para a configuração
+===================================================================*/
+
 # include "configWifi.h"
-/*
-void conectWifi(char* ssid, char* senha)
-{
-    delay(10);
-    Serial.print("Tentado conectar a rede: ");
-    Serial.println(ssid);
-
-    WiFi.begin(ssid, senha);
-
-    while (WiFi.status() != WL_CONNECTED){
-        delay(500);
-        Serial.print(".");
-    }
-
-    Serial.println("");
-    Serial.println("Conectado ao WiFi");
-    Serial.println("IP: ");
-    Serial.println(WiFi.localIP());
-}
-*/
 
 //Verifica se existem ceredenciais salvas, 
 //caso não tenha, inicia um servidor assincrono para que o usuário as insira
@@ -183,12 +173,15 @@ bool iniciarWiFi()
     return true;
 }
 
+//Função muito simples, somente define SSID e senha como vazio ""
 void resetarWifi()
 {
     escreverArquivo(SPIFFS, arquivoSSID, "");
     escreverArquivo(SPIFFS, arquivoSENHA, "");
 }
 
+//Função de extrema importância, pois quando o ponto de acesso
+//      estiver ativo o ESP não pode entrar em modo SLEEP
 bool isModoAP()
 {
     return modoAP;
