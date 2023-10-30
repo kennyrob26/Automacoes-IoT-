@@ -1,9 +1,13 @@
-#include "configArduinoOTA.h"
+/*====================================================================
 
-/*
     Código padrão disponibilizado pela biblioteca,
     não se esquecer de adicionar ArduinoOTA.handle(); no loop do código
-*/
+    
+====================================================================*/
+
+#include "configArduinoOTA.h"
+
+
 
 void configArduinoOTA()
 { 

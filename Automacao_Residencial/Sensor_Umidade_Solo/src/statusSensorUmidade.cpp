@@ -1,7 +1,10 @@
 /*
 
     NÃO ESTÁ SENDO UTILIZADA, FOI SUBSTITUIDA PELA BIBLIOTECA SENSOR UMIDADE SOLO
-        PRESENTE EM lib
+        PRESENTE EM /lib
+    
+    -> Foi substituida pois faz mais sentido utilizar orientação a objetos
+            devido a quantidade de sensores
 
         *Basicamente é onde encontramos a função que define
             pino que o sensor higrômetro está utilizando

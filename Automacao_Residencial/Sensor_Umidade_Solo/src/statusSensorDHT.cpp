@@ -20,6 +20,7 @@ DHT dht(DHTPino, DHTTYPE);
 
 /*=======================--- Funções ---=====================*/
 
+//Retorna a temperatura do ambiente
 float temperaturaAmbiente()
 {   
     float bufferTemperatura = dht.readTemperature();
@@ -32,6 +33,7 @@ float temperaturaAmbiente()
     return temperatura;
 }
 
+//Retorna a leitura do ambiente
 float umidadeAmbiente()
 {   
     

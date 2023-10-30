@@ -1,6 +1,8 @@
-#include "statusBateria.h"
+/*=================================================================
 
-/*No caso dos valores setados, a bateria está ligada a um divisor de tensão, onde:
+    Faz a leitura e retorna a tensão e porcentagem da bateria
+
+    No caso dos valores setados, a bateria está ligada a um divisor de tensão, onde:
 
     [GND] ---- {R1 22K} -- [GPIO] ---- {R2 14.7K} ---- [VCC BATERIA]
 
@@ -17,6 +19,8 @@
 //tMinima é a tensão minima da bateria em   0% (no geral 2.7V ~ 3.0V)
 //tMaxima é a tensão maxima da bateria em 100% (no geral 3.8V ~ 4.2V)
 
+#include "statusBateria.h"
+
 /*=======================--- Variáveis ---=====================*/
 
 float  tMinima    = 3.0,                 //0%   - 3.0V
@@ -31,15 +35,19 @@ unsigned long int leituraPin   = 0;      //Vai armazenar a soma de 500 amostras
 
 /*=======================--- Funções ---=====================*/
 
+//Define o pino que monitora a bateria
 void pinoBateria(int pinoBateria)
 {
     pinMode(pinoBateria, INPUT);
     pinBat = pinoBateria;
 }
 
-void leituraPinoBateria(){
+//Faz a leitura da tensão da bateria
+void leituraPinoBateria()
+{
     //Vamos trabalhar com amostras 500 amostras por leitura, para garantir maior consistência dos dados
     const int quantAmostras = 500;
+
     //Soma as amostras na variável leituraPin
     for(int i=0; i<quantAmostras; i++)
     {
@@ -48,7 +56,7 @@ void leituraPinoBateria(){
     //Divide a soma das amostras pela quantidade de amostras
     leituraPin = leituraPin/quantAmostras;
     
-
+    //Mapeia a entrada analógica para tensão, é necessário testes
     leituraPin = map(leituraPin, 2110, 2751, 3230, 4120);
     
     //Armazena a tensão da bateria
@@ -62,11 +70,11 @@ void leituraPinoBateria(){
 //Retorna a ultima tensão armazenada em tensaoBateria
 float tensaoBateria()
 {
-    //tensaoBat = analogRead(pinBat);
     return tensaoBat;
 }
 
-//Retorna a ultima porcentagem armazenada em porcentBat
+//Retorna a porcentagem da bateria com base na ultima porcentagem armazenada
+//Garante que não teremos valores maiores do que 100 e menores so que 0
 int porcentBateria()
 {
     if(tensaoBateria() <= tMinima)

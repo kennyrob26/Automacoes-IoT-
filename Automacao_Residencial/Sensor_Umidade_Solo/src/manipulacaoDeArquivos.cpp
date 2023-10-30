@@ -9,6 +9,7 @@
 
 #include "manipulacaoDeArquivos.h"
 
+//Inicia o montador SPIFFS
 void iniciairSPIFFS()
 {
   if(!SPIFFS.begin(true))
@@ -18,6 +19,7 @@ void iniciairSPIFFS()
   Serial.println("SPIFFS foi montado com sucesso");
 }
 
+//Recebe um arquivo e retorna seu conteúdo
 String lerArquivo(fs::FS &fs, const char* localArquivo)
 {
   Serial.printf("Vamos iniciar a leitura do arquivo: %s\r\n", localArquivo);
@@ -39,6 +41,7 @@ String lerArquivo(fs::FS &fs, const char* localArquivo)
   return conteudoArquivo;
 }
 
+//Recebe um arquivo e escreve um conteúdo
 void escreverArquivo(fs::FS &fs, const char* caminhoArquivo, const char* conteudo)
 {
   Serial.printf("Iniciando a escrita no arquivo: %s\r\n", caminhoArquivo);

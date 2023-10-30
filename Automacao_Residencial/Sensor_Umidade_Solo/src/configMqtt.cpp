@@ -1,23 +1,32 @@
 /*=======================================================
+
     Aqui estão todas as configurações MQTT
     A funções de configurações podem ser encontradas aqui
     E TODAS as FUNÇÕES de publicar MQTT
-==========================================================*/
 
+==========================================================*/
 
 #include "configMqtt.h"
 
-    WiFiClient espClient;
-    PubSubClient client(espClient);
-    long lastMsg = 0;
-    char msg[50];
-    int value = 0;
+//Instancia os objetos
+WiFiClient espClient;
+PubSubClient client(espClient);
 
-    //Variável de tempo
-    long ultimaReconexao = 0;
-    
-    unsigned short botaoPressionou = 0;
+/*====================--- Variáveis ---================== */
 
+//Configurações mqtt
+long lastMsg = 0;
+char msg[50];
+int value = 0;
+
+//Variável de tempo
+long ultimaReconexao = 0;
+
+unsigned short botaoPressionou = 0;
+
+/*====================--- FUNÇÕES ---==========================*/
+
+//Recebe o IP do host e a porta MQTT
 void defineServerMqtt(const char* ipServidorMqtt, int portaMqtt)
 {
     client.setServer(ipServidorMqtt, portaMqtt);
@@ -25,6 +34,7 @@ void defineServerMqtt(const char* ipServidorMqtt, int portaMqtt)
 
 }
 
+//Tenta conectar ao servidor
 void conectServerMqtt()
 {   
     if(!client.connected())
@@ -35,11 +45,15 @@ void conectServerMqtt()
     client.loop();
     
 }
+
+//Recebe as mensagens MQTT
 void callback(char* topico, byte* mensagem, unsigned int tamanho)
 {
     return;
     //Não recebe nada por enquanto, apenas envia
 }
+
+//Mantém a conexão com o servidor MQTT
 boolean reconectar()
 {
     if(client.connect("Sensor_umidade_solo"))
@@ -49,6 +63,7 @@ boolean reconectar()
     return client.connected();
 }
 
+//Publica a tensão da bateria
 void publicaTensaoBat()
 {
     char tensao[4];
@@ -57,6 +72,7 @@ void publicaTensaoBat()
     Serial.printf("Tensao da Bateria:\t%sV \n", tensao);
 }
 
+//Publica a porcentagem da bateria
 void publicaPorcentBat()
 {
     char porcentagem[3];
@@ -65,6 +81,7 @@ void publicaPorcentBat()
     Serial.printf("Porcentagem da bateria:\t%s%% \n", porcentagem);
 }
 
+//Publica a tensão da placa
 void publicaTensaoPlaca()
 {
     char tensao[4];
@@ -73,6 +90,7 @@ void publicaTensaoPlaca()
     Serial.printf("Tensão da Placa:\t%sV \n", tensao);
 }
 
+//Publica a Umidade atual do solo
 void publicaUmidadeAtual(SensorUmidade sensor)
 {
     char umidadeA[4];
@@ -81,6 +99,7 @@ void publicaUmidadeAtual(SensorUmidade sensor)
     Serial.printf("Umidade Atual:\t\t%s%% \n", umidadeA);
 }
 
+//Publica a Temperatura atual do ambiente
 void publicaTemperaturaAmbiente()
 {
     char temperatura[5];
@@ -88,6 +107,8 @@ void publicaTemperaturaAmbiente()
     client.publish("sensor_umidade/temperatura_ambiente", temperatura);
     Serial.printf("Temperatura Ambiente: %.2f °C \n", temperatura);
 }
+
+//Publica a umidade atual do ambiente
 void publicaUmidadeAmbiente()
 {
     char umidade[4];
@@ -96,38 +117,6 @@ void publicaUmidadeAmbiente()
     Serial.printf("Umidade Ambiente: %.1f%% \n", umidade);
 }
 
-/*Apenas alguns testes, no momento não estão sendo mais utilizados
-    mas preferi deixa-los no código caso encontre a necessidade de
-    algum teste pontual    
-*/
 
-void botao1()
-{
-    if(botaoPressionou == 0)
-    {
-        botaoPressionou = 1;
-    }
-    else
-    {
-        botaoPressionou = 0;
-    }
-
-    char estadoBotao[4];
-    sprintf(estadoBotao, "%d", botaoPressionou);
-
-    client.publish("sensor_umidade/botao1", estadoBotao);
-}
-
-void botao2()
-{
-
-}
-void teste()
-{
-    char payload[] = "ON";
-    char payload2[] = "2";
-    client.publish("horta/sensor_umidade", payload);
-    client.publish("horta/sensor_umidade2", payload2);
-}
 
 

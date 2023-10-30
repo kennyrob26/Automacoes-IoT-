@@ -1,4 +1,7 @@
-/*No caso dos valores setados, a placa está ligada a um divisor de tensão, onde:
+/*=================================================================
+    Faz a leitura e retorna a tensão da placa solar
+
+    No caso dos valores setados, a placa está ligada a um divisor de tensão, onde:
 
     [GND] ---- {R1 10K} -- [GPIO] ---- {R2 14.7K} ---- [VCC Placa solar]
 
@@ -17,7 +20,6 @@
 
 float         tensaoPlaca = 0.0;
 unsigned int  pinoPlaca   = 0  ;
-
 
 /*=======================--- Funções ---=====================*/
 
