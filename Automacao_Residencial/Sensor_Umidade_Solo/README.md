@@ -13,5 +13,5 @@ Toda a comunicação do projeto é realizada utilizando o protocolo MQTT, a plac
 ## :wrench: Status de Desenvolvimento
 
 > Status do Projeto: Em desenvolvimento :warning:
-- Versão de lançamento: <img src = "https://img.shields.io/static/v1?label=vers%C3%A3o_lan%C3%A7amento&message=v0.1&color=blue&style=for-the-plastic"
-- Versão atual: <img src="https://img.shields.io/static/v1?label=vers%C3%A3o&message=v0.1&color=blue&style=for-the-plastic"
+- Versão de lançamento: <img src = "https://img.shields.io/static/v1?label=vers%C3%A3o_lan%C3%A7amento&message=v0.1&color=blue&style=for-the-plastic"/>
+- Versão atual: <img src="https://img.shields.io/static/v1?label=vers%C3%A3o&message=v0.1&color=blue&style=for-the-plastic"/>
